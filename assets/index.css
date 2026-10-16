@@ -1,0 +1,292 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap');
+
+:root {
+  color-scheme: light;
+  font-family: 'DM Sans', sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --ink: #332b2d;
+  --muted: #8d7779;
+  --rose: #c56e79;
+  --rose-deep: #9f4e5c;
+  --paper: #fffaf6;
+  --outline: #6b4c50;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  display: grid;
+  min-width: 320px;
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0;
+  place-items: center;
+  overflow: hidden;
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse at 50% 43%, rgb(255 255 255 / 92%) 0, rgb(255 255 255 / 0%) 54%),
+    linear-gradient(135deg, #fcf6f1 0%, #f8eeeb 52%, #f5e8e7 100%);
+}
+
+.scene {
+  width: min(100% - 40px, 560px);
+  padding: 36px 0;
+  text-align: center;
+  transform: translateY(-8px);
+}
+
+.eyebrow {
+  margin: 0 0 14px;
+  color: var(--rose);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .24em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(32px, 7vw, 48px);
+  font-weight: 400;
+  letter-spacing: -.045em;
+  line-height: 1.12;
+}
+
+.hint {
+  margin: 14px 0 42px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.envelope-button {
+  display: block;
+  width: min(100%, 390px);
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.envelope {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.62;
+  filter: drop-shadow(0 22px 24px rgb(102 62 68 / 14%));
+  isolation: isolate;
+  transition: transform .35s cubic-bezier(.2, .75, .25, 1), filter .35s ease;
+}
+
+.envelope-button:hover .envelope,
+.envelope-button:focus-visible .envelope {
+  transform: translateY(-6px) rotate(-.4deg);
+  filter: drop-shadow(0 28px 25px rgb(102 62 68 / 19%));
+}
+
+.envelope-button:active .envelope {
+  transform: translateY(-2px) scale(.99);
+}
+
+.envelope-button:focus-visible {
+  outline: 2px solid var(--rose);
+  outline-offset: 10px;
+}
+
+.back,
+.front,
+.flap,
+.letter {
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid var(--outline);
+  border-radius: 12px;
+}
+
+.back {
+  z-index: 0;
+  overflow: hidden;
+  background: #eebfc0;
+  box-shadow: inset 0 0 0 5px #fff8f1, inset 0 0 0 7px rgb(107 76 80 / 9%);
+}
+
+.letter {
+  z-index: 1;
+  inset: 9% 10% 8%;
+  height: 86%;
+  border-color: #d9c2b7;
+  background: linear-gradient(150deg, #fffdf9, var(--paper));
+  box-shadow: 0 3px 9px rgb(90 61 60 / 8%);
+  transform: translateY(0);
+  transition: transform .68s cubic-bezier(.2, .8, .2, 1);
+}
+
+.letter::before {
+  position: absolute;
+  top: 28%;
+  right: 18%;
+  left: 18%;
+  height: 1px;
+  background: #e7d3cb;
+  box-shadow: 0 15px #e7d3cb, 0 30px #e7d3cb;
+  content: '';
+  opacity: .8;
+}
+
+.letter::after {
+  position: absolute;
+  inset: 8% 0 auto;
+  color: #b66d77;
+  content: 'for you';
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(13px, 3vw, 18px);
+  font-style: italic;
+}
+
+.front {
+  z-index: 2;
+  overflow: hidden;
+  background: #f7d6cf;
+  clip-path: polygon(0 0, 50% 60%, 100% 0, 100% 100%, 0 100%);
+}
+
+.front::before,
+.front::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  pointer-events: none;
+}
+
+.front::before {
+  background: linear-gradient(140deg, #f2c8c5, #edc0be);
+  clip-path: polygon(0 100%, 0 0, 50% 60%);
+}
+
+.front::after {
+  background: linear-gradient(225deg, #f5ceca, #efc5c1);
+  clip-path: polygon(100% 100%, 100% 0, 50% 60%);
+}
+
+.flap {
+  z-index: 3;
+  inset: 0 0 auto;
+  height: 65%;
+  border-radius: 10px 10px 0 0;
+  background: linear-gradient(155deg, #f9dfd8 0%, #f3cfcb 100%);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: 50% 0;
+  transition: transform .58s cubic-bezier(.2, .7, .25, 1);
+  backface-visibility: hidden;
+}
+
+.flap::after {
+  position: absolute;
+  inset: 6px 7px 0;
+  border: 1px solid rgb(107 76 80 / 72%);
+  border-top: 0;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  content: '';
+}
+
+.seal {
+  position: absolute;
+  z-index: 4;
+  top: 48%;
+  left: 50%;
+  display: grid;
+  width: clamp(50px, 15vw, 64px);
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid #a95160;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 28%, #f0929b, #d96374 75%);
+  box-shadow: inset 0 2px 4px rgb(255 220 216 / 80%), 0 4px 8px rgb(113 57 66 / 24%);
+  transform: translate(-50%, -50%);
+  transition: opacity .25s ease, transform .35s ease;
+}
+
+.seal svg {
+  width: 56%;
+  filter: drop-shadow(0 1px 0 #a44e5c);
+}
+
+.sparkle {
+  position: absolute;
+  z-index: 4;
+  color: #bd5869;
+  font: 24px/1 'Playfair Display', Georgia, serif;
+  text-shadow: 0 1px #fff8ef;
+}
+
+.sparkle.one { top: 12%; left: 18%; transform: rotate(-17deg); }
+.sparkle.two { top: 15%; right: 19%; font-size: 21px; transform: rotate(14deg); }
+.sparkle.three { top: 34%; left: 8%; font-size: 12px; }
+.sparkle.four { top: 36%; right: 8%; font-size: 12px; }
+
+.envelope-button[aria-expanded='true'] .letter {
+  transform: translateY(-45%);
+}
+
+.envelope-button[aria-expanded='true'] .flap {
+  z-index: 0;
+  transform: rotateX(180deg);
+}
+
+.envelope-button[aria-expanded='true'] .seal {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(.7);
+}
+
+.caption {
+  min-height: 24px;
+  margin: 30px 0 0;
+  color: var(--muted);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.6;
+  transition: opacity .25s ease;
+}
+
+.scene > .music-control {
+  display: flex;
+  width: fit-content;
+  margin: 18px auto 0;
+}
+
+@media (max-width: 480px) {
+  .scene { width: min(100% - 36px, 390px); }
+  .hint { margin-bottom: 34px; }
+  .caption { margin-top: 26px; }
+}
+
+@media (max-height: 620px) and (min-width: 481px) {
+  .scene { transform: none; }
+  .hint { margin-bottom: 24px; }
+  .envelope-button { width: min(100%, 330px); }
+  .caption { margin-top: 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+  }
+}

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f1eb">
+  <meta name="description" content="A little handwritten note, sent with love.">
+  <title>A Letter for You</title>
+  <link rel="stylesheet" href="assets/letter.css">
+  <link rel="stylesheet" href="assets/music.css">
+</head>
+<body>
+  <main class="letter-page">
+    <div class="letter-toolbar">
+      <a class="back-link" id="back-to-envelope" href="index.html" aria-label="Go back to the envelope">
+        <span aria-hidden="true">←</span> Back to the envelope
+      </a>
+      <button class="music-control" type="button" aria-label="Play music" aria-pressed="false">
+        <span class="music-icon" aria-hidden="true">♪</span>
+        <span class="music-label">Play music</span>
+      </button>
+    </div>
+
+    <div class="paper-scene">
+      <article class="letter-paper" id="letter-paper" aria-labelledby="letter-title">
+        <section class="paper-face paper-front" id="paper-front">
+          <div class="paper-edge" aria-hidden="true"></div>
+          <img class="kuromi-sticker sticker-top-left" src="assets/images/ku/ku-sticker-1.png" alt="" aria-hidden="true">
+          <img class="kuromi-sticker sticker-top-right" src="assets/images/ku/ku-sticker-2.png" alt="" aria-hidden="true">
+          <img class="kuromi-sticker sticker-bottom-left" src="assets/images/ku/ku-sticker-3.png" alt="" aria-hidden="true">
+          <img class="kuromi-sticker sticker-bottom-right" src="assets/images/ku/ku-sticker-4.png" alt="" aria-hidden="true">
+          <header class="letter-header">
+            <span class="letter-mark" aria-hidden="true">♥</span>
+            <p class="letter-label">A note from the heart</p>
+            <h1 id="letter-title">Dear Hailey,</h1>
+          </header>
+
+          <div class="letter-body">
+            <p>I'm sending you this because I wanted you to know that I am so grateful to have met such an amazing person like you, and you mean the world to me.</p>
+            <p>I really wish i will never lose you. Please don't be harsh to yourself because you're more than enough.</p>
+          </div>
+
+          <footer class="letter-signoff">
+            <span>With all my heart,</span>
+            <span class="signature">Kei</span>
+          </footer>
+          <button class="turn-page" type="button" id="turn-page" aria-controls="letter-paper" aria-pressed="false">
+            Flip to our album <span aria-hidden="true">↻</span>
+          </button>
+        </section>
+
+        <section class="paper-face paper-back" id="paper-back" aria-label="Album side" inert aria-hidden="true">
+          <div class="paper-edge" aria-hidden="true"></div>
+          <img class="kuromi-sticker sticker-top-left" src="assets/images/ku/ku-sticker-1.png" alt="" aria-hidden="true">
+          <img class="kuromi-sticker sticker-top-right" src="assets/images/ku/ku-sticker-2.png" alt="" aria-hidden="true">
+          <img class="kuromi-sticker sticker-bottom-left" src="assets/images/ku/ku-sticker-3.png" alt="" aria-hidden="true">
+          <img class="kuromi-sticker sticker-bottom-right" src="assets/images/ku/ku-sticker-4.png" alt="" aria-hidden="true">
+          <p class="letter-label">On the other side</p>
+          <h2>Our little album</h2>
+          <p class="album-teaser">A few moments I wanted to keep close.</p>
+          <div class="album-photo-grid" aria-label="Six favorite memories">
+            <img src="assets/images/candh.jpg" alt="Favorite memory one">
+            <img src="assets/images/candh1.jpg" alt="Favorite memory two">
+            <img src="assets/images/candh2.jpg" alt="Favorite memory three">
+            <img src="assets/images/candh3.jpg" alt="Favorite memory four">
+            <img src="assets/images/candh4.jpg" alt="Favorite memory five">
+            <img src="assets/images/candh5.jpg" alt="Favorite memory six">
+          </div>
+          <button class="turn-page turn-back" type="button" id="turn-back" aria-controls="letter-paper">
+            <span aria-hidden="true">↶</span> Flip back to the letter
+          </button>
+        </section>
+      </article>
+    </div>
+
+    <p class="page-caption">Some words are meant to be kept close.</p>
+  </main>
+  <div class="return-scene" id="return-scene" aria-hidden="true">
+    <div class="return-envelope" aria-hidden="true">
+      <span class="return-envelope-back"></span>
+      <span class="return-envelope-pocket"></span>
+      <span class="return-envelope-flap"></span>
+      <span class="return-envelope-heart">♥</span>
+    </div>
+  </div>
+  <audio id="background-song" autoplay loop preload="auto" aria-hidden="true">
+    <source src="assets/song/Arctic%20Monkeys%20-%20I%20Wanna%20Be%20Yours.mp3" type="audio/mpeg">
+  </audio>
+  <script src="assets/music.js"></script>
+  <script>
+    const returnLink = document.querySelector('#back-to-envelope');
+    const returnScene = document.querySelector('#return-scene');
+    let isReturning = false;
+
+    returnLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      if (isReturning) return;
+      isReturning = true;
+
+      const paperIsTurned = paper.classList.contains('is-turned');
+      paper.style.setProperty('--return-start-angle', paperIsTurned ? '-180deg' : '0deg');
+      returnScene.classList.add('is-active');
+      returnScene.setAttribute('aria-hidden', 'false');
+      document.querySelector('.letter-page').classList.add('is-returning');
+      paper.classList.add('is-returning');
+      returnLink.setAttribute('aria-disabled', 'true');
+
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.setTimeout(() => window.location.assign('index.html'), reducedMotion ? 60 : 1550);
+    });
+
+    const turnButton = document.querySelector('#turn-page');
+    const paper = document.querySelector('#letter-paper');
+    const backButton = document.querySelector('#turn-back');
+    const frontFace = document.querySelector('#paper-front');
+    const backFace = document.querySelector('#paper-back');
+
+    function setPaperTurned(isTurned) {
+      paper.classList.toggle('is-turned', isTurned);
+      turnButton.setAttribute('aria-pressed', String(isTurned));
+      frontFace.inert = isTurned;
+      frontFace.setAttribute('aria-hidden', String(isTurned));
+      backFace.inert = !isTurned;
+      backFace.setAttribute('aria-hidden', String(!isTurned));
+    }
+
+    turnButton.addEventListener('click', () => setPaperTurned(true));
+    backButton.addEventListener('click', () => setPaperTurned(false));
+  </script>
+</body>
+</html>

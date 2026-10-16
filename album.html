@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f1eb">
+  <meta name="description" content="A small album of favorite moments, gathered with love.">
+  <title>Our Little Album</title>
+  <link rel="stylesheet" href="assets/album.css">
+  <link rel="stylesheet" href="assets/music.css">
+</head>
+<body>
+  <main class="album-page">
+    <div class="album-toolbar">
+      <a class="back-link" href="letter.html"><span aria-hidden="true">←</span> Back to the letter</a>
+      <button class="music-control" type="button" aria-label="Play music" aria-pressed="false">
+        <span class="music-icon" aria-hidden="true">♪</span>
+        <span class="music-label">Play music</span>
+      </button>
+    </div>
+
+    <article class="album-paper">
+      <span class="paper-edge" aria-hidden="true"></span>
+      <header class="album-header">
+        <p class="eyebrow">A collection of memories</p>
+        <h1>Our little album</h1>
+        <p class="intro">Some moments are too lovely not to keep.</p>
+        <span class="header-heart" aria-hidden="true">♥</span>
+      </header>
+
+      <section class="photo-grid" aria-label="Photo album">
+      <figure class="photo-card photo-card-tall">
+        <button class="photo-button" type="button" aria-label="View memory 1">
+          <img src="assets/images/candh.jpg" alt="A favorite shared memory">
+        </button>
+        <figcaption><span>01</span> A moment to remember</figcaption>
+      </figure>
+      <figure class="photo-card photo-card-offset">
+        <button class="photo-button" type="button" aria-label="View memory 2">
+          <img src="assets/images/candh1.jpg" alt="A favorite shared memory">
+        </button>
+        <figcaption><span>02</span> One for the keepsake box</figcaption>
+      </figure>
+      <figure class="photo-card">
+        <button class="photo-button" type="button" aria-label="View memory 3">
+          <img src="assets/images/candh2.jpg" alt="A favorite shared memory">
+        </button>
+        <figcaption><span>03</span> A little piece of happy</figcaption>
+      </figure>
+      <figure class="photo-card photo-card-offset">
+        <button class="photo-button" type="button" aria-label="View memory 4">
+          <img src="assets/images/candh3.jpg" alt="A favorite shared memory">
+        </button>
+        <figcaption><span>04</span> The kind of day to treasure</figcaption>
+      </figure>
+      <figure class="photo-card">
+        <button class="photo-button" type="button" aria-label="View memory 5">
+          <img src="assets/images/candh4.jpg" alt="A favorite shared memory">
+        </button>
+        <figcaption><span>05</span> A memory close to my heart</figcaption>
+      </figure>
+      <figure class="photo-card photo-card-tall photo-card-offset">
+        <button class="photo-button" type="button" aria-label="View memory 6">
+          <img src="assets/images/candh5.jpg" alt="A favorite shared memory">
+        </button>
+        <figcaption><span>06</span> More moments, always</figcaption>
+      </figure>
+      </section>
+
+      <footer class="album-footer">Made with love <span aria-hidden="true">♥</span></footer>
+    </article>
+  </main>
+
+  <dialog class="photo-viewer" aria-label="Photo viewer">
+    <button class="viewer-close" type="button" aria-label="Close photo">×</button>
+    <img class="viewer-image" src="" alt="A favorite shared memory">
+  </dialog>
+
+  <audio id="background-song" autoplay loop preload="auto" aria-hidden="true">
+    <source src="assets/song/Arctic%20Monkeys%20-%20I%20Wanna%20Be%20Yours.mp3" type="audio/mpeg">
+  </audio>
+  <script src="assets/music.js"></script>
+
+  <script>
+    const viewer = document.querySelector('.photo-viewer');
+    const viewerImage = document.querySelector('.viewer-image');
+
+    document.querySelectorAll('.photo-button').forEach((button) => {
+      button.addEventListener('click', () => {
+        const image = button.querySelector('img');
+        viewerImage.src = image.src;
+        viewerImage.alt = image.alt;
+        viewer.showModal();
+      });
+    });
+
+    document.querySelector('.viewer-close').addEventListener('click', () => viewer.close());
+    viewer.addEventListener('click', (event) => {
+      if (event.target === viewer) viewer.close();
+    });
+  </script>
+</body>
+</html>
